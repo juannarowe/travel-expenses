@@ -12,6 +12,9 @@ export const generateExpenseReport = (dailyExpenses: number[], dailyBudget: numb
     if (dailyExpenses.some(expense => expense < 0)) {
         throw new Error("Los gastos no pueden ser negativos.");
     }
+    if (dailyExpenses.some(isNaN)) {
+        throw new Error("Los gastos contienen valores no numéricos.");
+    }
     const travelDays = dailyExpenses.length;
     const expenseDays = dailyExpenses.filter(expenses => expenses > 0).length;
     const totalSpent = dailyExpenses.reduce((acc, crr) => acc + crr, 0);
@@ -42,9 +45,9 @@ export const generateExpenseReport = (dailyExpenses: number[], dailyBudget: numb
         feedback
     };
 }
-
+/*
 console.log(generateExpenseReport([50, 0, 120, 85], 100));
-    
+*/
 /* Retorna:
 {
 travelDays: 4,
@@ -56,3 +59,9 @@ rating: 3,
 feedback: "¡Excelente gestión!"
 }
 */
+
+try {
+    console.log(generateExpenseReport([50, 0, 120, 85], 100));
+} catch (error) {
+    if (error instanceof Error) console.error(error.message);
+}

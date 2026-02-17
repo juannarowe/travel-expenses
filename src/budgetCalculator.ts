@@ -1,7 +1,10 @@
 type BudgetStatus = 'Under budget' | 'On budget' | 'Over budget';
 
-function calculateBudgetStatus(totalExpenses: number, budget: number): BudgetStatus {
+export const calculateBudgetStatus = (totalExpenses: number, budget: number): BudgetStatus => {
     const percentage = (totalExpenses/budget) * 100;
+    if ((totalExpenses < 0) || (budget < 0)) {
+        throw new Error('Numbers should be a positive value.');
+    }
     if (percentage < 80) {
         return 'Under budget';
     } else if (percentage <= 100) {
